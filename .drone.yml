@@ -1,0 +1,58 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+workspace:
+  path: /drone_test
+
+steps:
+  - name: startSlack
+    pull: if-not-exists
+    image: plugins/slack
+    settings:
+      channel: bot
+      icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+      template: >
+        *start* building *{{repo.name}}*:*{{build.branch}}* <#{{build.number}}>.
+      username: drone
+    environment:
+      SLACK_WEBHOOK: https://hooks.slack.com/services/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
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+      event:
+        - push
+
+  - name: finishSlack
+    pull: if-not-exists
+    image: plugins/slack
+    settings:
+      channel: bot
+      icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+      template: >
+        {{#success build.status}}
+          *success* ${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER} was well served.
+          Check out our new <https://github.com|drone_test>.
+        {{else}}
+          Houston, we have a problem. Build #{{build.number}} failed.
+        {{/success}}
+      username: drone
+    environment:
+      SLACK_WEBHOOK: https://hooks.slack.com/services/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
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+      event:
+        - push
+      status:
+        - success
+        - failure
