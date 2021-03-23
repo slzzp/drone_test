@@ -15,13 +15,12 @@ steps:
     pull: if-not-exists
     image: plugins/slack
     settings:
+      webhook: https://hooks.slack.com/services/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
       channel: bot
       icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+      username: drone
       template: >
         *start* building *{{repo.name}}*:*{{build.branch}}* <#{{build.number}}>.
-      username: drone
-    environment:
-      SLACK_WEBHOOK: https://hooks.slack.com/services/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
     when:
       branch:
         - dev
@@ -34,8 +33,10 @@ steps:
     pull: if-not-exists
     image: plugins/slack
     settings:
+      webhook: https://hooks.slack.com/services/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
       channel: bot
       icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+      username: drone
       template: >
         {{#success build.status}}
           *success* ${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER} was well served.
@@ -43,9 +44,6 @@ steps:
         {{else}}
           Houston, we have a problem. Build #{{build.number}} failed.
         {{/success}}
-      username: drone
-    environment:
-      SLACK_WEBHOOK: https://hooks.slack.com/services/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
     when:
       branch:
         - dev
