@@ -35,7 +35,8 @@ steps:
     pull: if-not-exists
     image: curlimages/curl:7.75.0
     commands:
-      - curl -H '' --request POST --data "{\"name\":\"gcr.io/mirror-tv-275709/mirror-tv-nuxt\",\"tag\":\"stag__188\"}" http://keel-stag.mnews.tw/v1/webhooks/native
+      - curl -H '' --request POST --data "{\"name\":\"gcr.io/mirror-tv-275709/mirror-tv-nuxt\",\"tag\":\"stag__188\"}" \
+        http://keel-stag.mnews.tw/v1/webhooks/native
 #      - curl -H 'Content-Type: application/json' --request POST --data "{}" http://keel-stag.mnews.tw/v1/webhooks/native
 #      - curl -H "Content-Type: application/json" --request POST --data "{\"name\":\"gcr.io/mirror-tv-275709/mirror-tv-nuxt\",\"tag\":\"stag__188\"}" http://keel-stag.mnews.tw/v1/webhooks/native
 #      - curl -H "Content-Type: application/json" --request POST --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}\"}" http://keel-stag.mnews.tw/v1/webhooks/native
