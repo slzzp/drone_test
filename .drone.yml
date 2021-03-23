@@ -15,14 +15,12 @@ steps:
     pull: if-not-exists
     image: plugins/slack
     settings:
+      webhook: https://hooks.slack.com/services/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
       channel: bot
       icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
       username: drone
       template: >
         *start* building *{{repo.name}}*:*{{build.branch}}* <#{{build.number}}>.
-    environment:
-      SLACK_WEBHOOK:
-        from_secret: slack_webhook
     when:
       branch:
         - dev
@@ -35,6 +33,7 @@ steps:
     pull: if-not-exists
     image: plugins/slack
     settings:
+      webhook: https://hooks.slack.com/services/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
       channel: bot
       icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
       username: drone
@@ -45,9 +44,6 @@ steps:
         {{else}}
           Houston, we have a problem. Build #{{build.number}} failed.
         {{/success}}
-    environment:
-      SLACK_WEBHOOK:
-        from_secret: slack_webhook
     when:
       branch:
         - dev
